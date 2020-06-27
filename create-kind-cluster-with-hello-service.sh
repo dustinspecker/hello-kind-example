@@ -15,7 +15,7 @@ fi
 
 # download kubectl
 if [ ! -f ~/kubectl ]; then
-  curl https://storage.googleapis.com/kubernetes-release/release/v1.17.0/bin/linux/amd64/kubectl \
+  curl https://storage.googleapis.com/kubernetes-release/release/v1.18.5/bin/linux/amd64/kubectl \
     --location \
     --output ~/kubectl
 
@@ -28,10 +28,14 @@ fi
 # create cluster
 if ! ~/kind get clusters | grep kind ; then
   ~/kind create cluster
+
+  ~/kubectl wait node kind-control-plane \
+    --for condition=Ready \
+    --timeout 300s
 fi
 
-# create hello service and deployment
-if ! ~/kubectl get deployment hello ; then
+# create hello service and pod
+if ! ~/kubectl get pod hello ; then
   ~/kubectl run hello \
     --expose \
     --image nginxdemos/hello:plain-text \
