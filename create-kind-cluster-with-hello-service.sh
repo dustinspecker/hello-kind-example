@@ -3,7 +3,7 @@ set -ex
 
 # download kind
 if [ ! -f ~/kind ]; then
-  curl https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-linux-amd64 \
+  curl https://github.com/kubernetes-sigs/kind/releases/download/v0.8.1/kind-linux-amd64 \
     --location \
     --output ~/kind
 
